@@ -43,7 +43,7 @@ function LinkedInPreview() {
           containerWidth[screenSize]
         )}
       ></div>
-      <div className="w-[555px] font-system overflow-hidden rounded-lg bg-white shadow ring-1 ring-inset ring-gray-200">
+      <div className="md:w-[555px] sm:w-[480px] w-[320px] font-system overflow-hidden rounded-lg bg-white shadow ring-1 ring-inset ring-gray-200">
         <div className="py-5 pl-4 pr-6">
           <div className="flex items-center gap-3">
             <div className="min-w-0 flex-1">
@@ -120,7 +120,7 @@ function LinkedInPreview() {
                   screenSize === "mobile" ? "hidden" : "text-xs"
                 )}
               >
-                Devv and 88 others
+                Paul Augustine and 88 others
               </span>
             </div>
             <div className="flex items-center justify-end gap-2">
