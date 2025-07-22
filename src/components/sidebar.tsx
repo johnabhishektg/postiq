@@ -85,7 +85,31 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
           </div>
         </li>
       </div>
-      {/* <div className="flex-grow">
+
+      <div className="flex flex-col space-y-3">
+        <hr className="my-4 md:my-6 w-full h-px bg-gray-100" />
+
+        <div>John Abhishek</div>
+        <Button variant="outline" className="shadow-lg cursor-pointer">
+          Feedback 🫶
+        </Button>
+        {/* <UserButton
+          showName
+          appearance={{
+            elements: {
+              userButtonBox: "flex-row-reverse",
+            },
+          }}
+        /> */}
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;
+
+{
+  /* <div className="flex-grow">
         <ul>
           {SIDEBAR_ITEMS.map(({ category, items }) => (
             <li key={category} className="mb-4 md:mb-8">
@@ -111,21 +135,5 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             </li>
           ))}
         </ul>
-      </div> */}
-      <div className="flex flex-col">
-        <hr className="my-4 md:my-6 w-full h-px bg-gray-100" />
-        <div>John Abhishek</div>
-        {/* <UserButton
-          showName
-          appearance={{
-            elements: {
-              userButtonBox: "flex-row-reverse",
-            },
-          }}
-        /> */}
-      </div>
-    </div>
-  );
-};
-
-export default Sidebar;
+      </div> */
+}
