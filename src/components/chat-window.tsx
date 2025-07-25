@@ -14,7 +14,7 @@ import { Textarea } from "./ui/textarea";
 import { useChat } from "@ai-sdk/react";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
 import { cn } from "@/lib/utils";
-import { ChatRequestOptions } from "ai";
+import { ChatRequestOptions, CreateMessage, Message } from "ai";
 import Image from "next/image";
 
 function ScrollToBottom(props: { className?: string }) {
@@ -23,12 +23,13 @@ function ScrollToBottom(props: { className?: string }) {
   if (isAtBottom) return null;
   return (
     <Button
-      className={cn(props.className)}
-      variant="outline"
+      className={cn(
+        "bg-primary text-white rounded-full cursor-pointer shadow border border-zinc-100",
+        props.className
+      )}
       onClick={() => scrollToBottom()}
     >
-      <ArrowDown className="w-4 h-4" />
-      <span>Scroll to bottom</span>
+      <ArrowDown className="w-4 h-4 text-white" />
     </Button>
   );
 }
@@ -43,6 +44,10 @@ export function ChatInput(props: {
     e: React.FormEvent<HTMLFormElement> | undefined,
     chatRequestOptions?: ChatRequestOptions
   ) => void;
+  append: (
+    message: Message | CreateMessage,
+    chatRequestOptions?: ChatRequestOptions
+  ) => void;
 }) {
   return (
     <form
@@ -54,6 +59,14 @@ export function ChatInput(props: {
         onChange={props.handleInputChange}
         placeholder={props.placeholder}
         className=" bg-white resize-none mt-4 h-26 shadow-sm  placeholder:text-zinc-400 placeholder:font-bold"
+        onKeyDown={async (event) => {
+          if (event.key === "Enter") {
+            props.append({ content: props.value, role: "user" });
+            props.handleInputChange({
+              target: { value: "" },
+            } as ChangeEvent<HTMLInputElement>);
+          }
+        }}
       />
       <Button
         variant="outline"
@@ -99,7 +112,7 @@ function StickyToBottomContent(props: {
         </div>
       </div>
       {/* CHATWINDOW */}
-      <div ref={context.scrollRef} className=" bg-white">
+      <div ref={context.scrollRef} className="bg-white overflow-y-auto">
         <div className="h-[820px] items-center" ref={context.contentRef}>
           {props.content}
         </div>
@@ -115,8 +128,8 @@ function ChatLayout(props: { content: ReactNode; footer: ReactNode }) {
       <StickyToBottomContent
         content={props.content}
         footer={
-          <div>
-            <ScrollToBottom className="flex justify-center" />
+          <div className="relative w-[555px]">
+            <ScrollToBottom className="absolute right-1/2 bottom-15 " />
             {props.footer}
           </div>
         }
@@ -129,11 +142,12 @@ export function ChatWindow(props: {
   emptyStateComponent: React.ReactNode;
   placeholder: string;
 }) {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, append } =
+    useChat();
 
   return (
     <>
-      <div className="-top-px min-h-full w-[555px] flex flex-col overflow-hidden shrink-0 border border-l-2">
+      <div className="-top-px min-h-full w-[555px] flex flex-col shrink-0 border border-l-2">
         {/* CHATINPUT */}
         <ChatLayout
           content={
@@ -158,7 +172,7 @@ export function ChatWindow(props: {
                       </div>
                     ) : (
                       <div className="rounded-lg w-full mb-8 text-zinc-600 font-medium tracking-normal">
-                        <span>{message.content}</span>
+                        <span className="mb-4">{message.content}</span>
                       </div>
                     )}
                   </div>
@@ -172,6 +186,7 @@ export function ChatWindow(props: {
               handleInputChange={handleInputChange}
               handleSubmit={handleSubmit}
               placeholder={props.placeholder}
+              append={append}
             />
           }
         />

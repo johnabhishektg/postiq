@@ -36,7 +36,7 @@ function LinkedInPreview() {
   };
 
   return (
-    <div className="flex flex-1 flex-col items-center gap-5 overflow-y-auto bg-gray-50 py-5">
+    <div className="flex flex-1 flex-col items-center gap-5 overflow-y-auto bg-gray-50 pt-5">
       <div
         className={cn(
           "mx-auto transition-all duration-300",

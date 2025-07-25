@@ -6,7 +6,7 @@ import { ChatWindow } from "./chat-window";
 
 function Chatbot() {
   const infoCard = (
-    <div className="bg-white flex-1 overflow-y-auto  px-4 flex flex-col justify-center text-center">
+    <div className="bg-white flex-1 overflow-y-auto px-4 flex flex-col justify-center text-center">
       <div>
         <div className="text-3xl font-bold ">Let's write a banger post ✏️</div>
         <div className="text-zinc-400 text-sm mt-2 ">

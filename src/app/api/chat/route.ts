@@ -1,16 +1,23 @@
+import { UIMessage, Message as VercelChatMessage, streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
 
-// Allow streaming responses up to 30 seconds
-export const maxDuration = 30;
+const formatMessage = (message: VercelChatMessage) => {
+  return `${message.role}: ${message.content}`;
+};
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  try {
+    const { messages }: { messages: UIMessage[] } = await req.json();
 
-  const result = streamText({
-    model: openai("gpt-3.5-turbo"),
-    messages,
-  });
+    const result = streamText({
+      model: openai("gpt-4o"),
+      system:
+        "You are a professional LinkedIn ghostwriter. You write engaging, insightful, and authentic posts and comments that reflect the user's voice and position them as a thought leader. Your tone balances professionalism with a touch of personality and warmth. You understand LinkedIn culture, avoiding hard sells and focusing on value, storytelling, and credibility.",
+      messages,
+    });
 
-  return result.toDataStreamResponse();
+    return result.toDataStreamResponse();
+  } catch (e: any) {
+    return Response.json({ error: e.message }, { status: e.status ?? 500 });
+  }
 }
