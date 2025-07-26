@@ -7,7 +7,7 @@ export const NavItems = () => {
   const pathname = usePathname();
   return [
     {
-      name: "Pen",
+      name: "Canvas",
       icon: "✏️",
       href: "/",
       active: pathname === "/",

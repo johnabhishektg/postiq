@@ -1,11 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, PanelLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight, PanelLeft, Plus } from "lucide-react";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { NavItems } from "./nav-items";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -21,42 +21,63 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className="pr-4">
-      <div className="flex p-6 items-center gap-2 rounded-3xl">
-        <Button variant="outline" className="rounded-full cursor-pointer">
-          <PanelLeft className="text-zinc-700 w-8" />
-        </Button>
-        <p className="text-md/7 font-medium text-gray-500">postiq.</p>
-      </div>
+    <div>
       <div
         className={cn(
-          isSidebarExpanded ? "w-[300px]" : "w-[68px]",
-          "border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full"
+          isSidebarExpanded ? "w-[220px]" : "w-[68px]",
+          "border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full bg-white text-sm font-medium leading-6 text-zinc-700"
         )}
       >
         {/* logo */}
 
         <aside className="flex h-full flex-col w-full break-words px-4 overflow-x-hidden columns-1">
           <div className="mt-4 relative pb-2">
+            <div className="flex items-center gap-2 rounded-3xl">
+              <Button
+                onClick={toggleSidebar}
+                variant="outline"
+                className="rounded-full cursor-pointer"
+              >
+                <PanelLeft className="text-zinc-700 w-8" />
+              </Button>
+              {isSidebarExpanded ? (
+                <p className="text-sm font-medium text-gray-500">postiq.</p>
+              ) : (
+                ""
+              )}
+            </div>
+            <hr className="w-full h-px bg-gray-100 my-3" />
+            <Button className="bg-[#4f47e1] text-white font-bold rounded flex items-center gap-2 w-full cursor-pointer p-0">
+              <Plus size={16} />
+              {isSidebarExpanded ? "New Post" : ""}
+            </Button>
+
+            {isSidebarExpanded ? (
+              <p className="text-xs font-medium leading-6 text-zinc-500 my-2">
+                Recents
+              </p>
+            ) : (
+              <hr className="w-full h-px bg-gray-100 my-3" />
+            )}
+
             <div className="flex flex-col space-y-1">
               {navItems.map((item, idx) => {
                 if (item.position === "top") {
                   return (
-                    <Fragment key={idx}>
-                      <SideNavItem
-                        label={item.name}
-                        icon={item.icon}
-                        active={item.active}
-                        path={item.href}
-                        isSidebarExpanded={isSidebarExpanded}
-                      />
-                    </Fragment>
+                    <SideNavItem
+                      key={idx}
+                      label={item.name}
+                      icon={item.icon}
+                      active={item.active}
+                      path={item.href}
+                      isSidebarExpanded={isSidebarExpanded}
+                    />
                   );
                 }
               })}
             </div>
           </div>
-          <div className="sticky bottom-0 mt-auto whitespace-nowrap mb-4 transition duration-200 block">
+          <div className="sticky bottom-15 mt-auto whitespace-nowrap mb-4 transition duration-200 block">
             {navItems.map((item, idx) => {
               if (item.position === "bottom") {
                 return (
@@ -76,19 +97,7 @@ export const Sidebar = () => {
             })}
           </div>
         </aside>
-        <div className="mt-[calc(calc(90vh)-40px)] relative">
-          <button
-            type="button"
-            className="absolute bottom-32 right-[-12px] flex h-6 w-6 items-center justify-center border border-muted-foreground/20 rounded-full bg-accent shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
-            onClick={toggleSidebar}
-          >
-            {isSidebarExpanded ? (
-              <ChevronLeft size={16} className="stroke-foreground" />
-            ) : (
-              <ChevronRight size={16} className="stroke-foreground" />
-            )}
-          </button>
-        </div>
+
         {/* navigation items */}
       </div>
     </div>
@@ -107,15 +116,23 @@ export const SideNavItem: React.FC<{
       {isSidebarExpanded ? (
         <Link
           href={path}
-          className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
-            active
-              ? "font-base text-sm bg-neutral-200 shadow-sm text-neutral-700 dark:bg-neutral-800 dark:text-white"
-              : "hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
-          }`}
+          className={cn(
+            buttonVariants({
+              variant: "ghost",
+              className: `text-left relative flex items-center justify-start ${
+                active ? "bg-gray-50 text-accent-foreground" : ""
+              } `,
+            })
+          )}
+          // className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
+          //   active
+          //     ? "font-base text-sm bg-neutral-200 shadow-sm text-neutral-700 dark:bg-neutral-800 dark:text-white"
+          //     : "hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
+          // }`}
         >
-          <div className="relative font-base text-sm py-1.5 px-2 flex flex-row items-center space-x-2 rounded-md duration-100">
+          <div className="relative size-4 font-bold text-zinc-500 group-hover:text-zinc-700">
             {icon}
-            <span>{label}</span>
+            <span> {label}</span>
           </div>
         </Link>
       ) : (
@@ -126,11 +143,11 @@ export const SideNavItem: React.FC<{
                 href={path}
                 className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
                   active
-                    ? "font-base text-sm bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-white"
-                    : "hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
+                    ? "font-base text-sm bg-gray-50 text-neutral-700 dark:bg-neutral-800 dark:text-white"
+                    : "hover:bg-gray-50 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
                 }`}
               >
-                <div className="relative font-base text-sm p-2 flex flex-row items-center space-x-2 rounded-md duration-100">
+                <div className="relative font-bold text-md p-2 flex flex-row items-center space-x-2 rounded-md duration-100">
                   {icon}
                 </div>
               </Link>
