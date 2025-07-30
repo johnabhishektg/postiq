@@ -1,3 +1,4 @@
+import AppSidebar from "@/components/app-sidebar";
 import Chatbot from "@/components/chatbot";
 import LinkedInPreview from "@/components/linkedin-preview";
 import SideNav from "@/components/side-nav";
@@ -15,26 +16,8 @@ export default function Home() {
     //   {/* <Sidebar /> */}
     //   <Chatbot />
     // </div>
-    <div className="flex">
-      <SidebarProvider className="w-fit" defaultOpen={false}>
-        <SideNav />
-      </SidebarProvider>
-      <div className="max-w-full mx-auto">
-        <LinkedInPreview />
-      </div>
-      <SidebarProvider>
-        <Sidebar
-          variant="inset"
-          collapsible="offcanvas"
-          className="w-fit"
-          side="right"
-        >
-          <SidebarTrigger />
-          <SidebarInset>
-            <Chatbot />
-          </SidebarInset>
-        </Sidebar>
-      </SidebarProvider>
+    <div className="max-w-full mx-auto bg-gray-50">
+      <LinkedInPreview />
     </div>
   );
 }

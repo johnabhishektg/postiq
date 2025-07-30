@@ -48,8 +48,12 @@ function SideNav() {
   const { open, toggleSidebar } = useSidebar();
 
   return (
-    <Sidebar variant="inset" collapsible="icon">
-      <SidebarHeader className="flex flex-row items-center">
+    <Sidebar
+      className="bg-white border-r border-zinc-200"
+      variant="inset"
+      collapsible="icon"
+    >
+      <SidebarHeader className="bg-white flex flex-row items-center">
         <Button
           onClick={toggleSidebar}
           variant="outline"
@@ -63,7 +67,7 @@ function SideNav() {
           ""
         )}
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-white">
         <SidebarGroup />
         <SidebarGroupContent>
           <SidebarMenu className={`${open == true ? "" : "items-center"}`}>
