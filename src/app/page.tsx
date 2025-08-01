@@ -1,23 +1,28 @@
-import AppSidebar from "@/components/app-sidebar";
-import Chatbot from "@/components/chatbot";
+"use client";
+
 import LinkedInPreview from "@/components/linkedin-preview";
-import SideNav from "@/components/side-nav";
-import {
-  Sidebar,
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
 
 export default function Home() {
+  const initialConfig = {
+    namespace: `linkedin-editor`,
+    theme: {
+      text: {
+        bold: "font-bold",
+        italic: "italic",
+        underline: "underline",
+      },
+    },
+    onError: (error: Error) => {
+      console.error("[Tweet Editor Error]", error);
+    },
+  };
+
   return (
-    // <div className="relative h-screen flex flex-col md:flex-row bg-gray-50 overflow-hidden">
-    //   {/* <Navbar /> */}
-    //   {/* <Sidebar /> */}
-    //   <Chatbot />
-    // </div>
     <div className="max-w-full mx-auto bg-gray-50">
-      <LinkedInPreview />
+      <LexicalComposer initialConfig={initialConfig}>
+        <LinkedInPreview />
+      </LexicalComposer>
     </div>
   );
 }

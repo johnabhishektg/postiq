@@ -4,6 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Icon, Icons } from "./icon";
 import { cn } from "@/lib/utils";
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
+import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
+import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 
 function LinkedInPreview() {
   const [screenSize, setScreenSize] = React.useState<
@@ -28,6 +31,10 @@ function LinkedInPreview() {
       }
     }, 0);
   };
+
+  function Placeholder() {
+    return <div>What do you want to write about?</div>;
+  }
 
   const containerWidth = {
     mobile: "w-[320px]",
@@ -89,7 +96,18 @@ function LinkedInPreview() {
               !isExpanded && "line-clamp-3"
             )}
           >
-            {processedContent}
+            <PlainTextPlugin
+              contentEditable={
+                <ContentEditable
+                // className={cn(
+                //   "w-full !min-h-16 resize-none text-base/7 leading-relaxed text-stone-800 border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
+                // )}
+                // aria-placeholder={<Placeholder />}
+                />
+              }
+              placeholder={<div>What do you want to post about? </div>}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
           </div>
           {showMoreButton && (
             <button
