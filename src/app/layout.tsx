@@ -37,8 +37,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="flex">
-          <SidebarProvider className="w-fit" defaultOpen={false}>
+          <SidebarProvider className="w-fit" defaultOpen={true}>
             <SideNav />
+            <SidebarTrigger />
           </SidebarProvider>
 
           <SidebarProvider
