@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     const { messages }: { messages: UIMessage[] } = await req.json();
 
     const result = streamText({
-      model: openai("gpt-4o"),
+      model: openai("ft:gpt-4o-mini-2024-07-18:prmise::C16dIUCN"),
       system:
         "You are a professional LinkedIn ghostwriter. You write engaging, insightful, and authentic posts and comments that reflect the user's voice and position them as a thought leader. Your tone balances professionalism with a touch of personality and warmth. You understand LinkedIn culture, avoiding hard sells and focusing on value, storytelling, and credibility.",
       messages,

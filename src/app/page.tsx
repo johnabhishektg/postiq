@@ -1,6 +1,6 @@
 "use client";
 
-import LinkedInPreview from "@/components/linkedin-preview";
+import LinkedInPreview from "@/components/linkedin-editor/linkedin-preview";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 
 export default function Home() {

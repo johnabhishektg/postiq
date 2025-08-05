@@ -1,32 +1,26 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   AudioWaveform,
   Brain,
   Calendar,
   ChevronsDownUp,
   LibraryBig,
-  PanelLeft,
   Pencil,
-  Plus,
 } from "lucide-react";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   useSidebar,
 } from "./ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 function SideNav() {
   const { open, toggleSidebar, state } = useSidebar();
@@ -105,7 +99,7 @@ function SideNav() {
               )}
             >
               <div className="size-6 flex items-center justify-center flex-shrink-0">
-                <LibraryBig className="w-5 h-5 text-zinc-00" />
+                <LibraryBig className="w-5 h-5 text-zinc-400" />
               </div>
               <span
                 className={cn(

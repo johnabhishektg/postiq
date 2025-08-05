@@ -1,15 +1,10 @@
+import AppSidebar from "@/components/app-sidebar";
+import AppSidebarInset from "@/components/providers/app-sidebar-inset";
+import SideNav from "@/components/side-nav";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import SideNav from "@/components/side-nav";
-import LinkedInPreview from "@/components/linkedin-preview";
-import AppSidebar from "@/components/app-sidebar";
-import AppSidebarInset from "@/components/providers/app-sidebar-inset";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
