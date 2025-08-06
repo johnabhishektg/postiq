@@ -4,17 +4,21 @@ import LinkedInPreview from "@/components/linkedin-editor/linkedin-preview";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 
 export default function Home() {
+  const getTheme = () => ({
+    ltr: "ltr",
+    rtl: "rtl",
+    paragraph: "mb-2 relative",
+    text: {
+      bold: "font-bold",
+      italic: "italic",
+    },
+  });
+
   const initialConfig = {
     namespace: `linkedin-editor`,
-    theme: {
-      text: {
-        bold: "font-bold",
-        italic: "italic",
-        underline: "underline",
-      },
-    },
+    theme: getTheme,
     onError: (error: Error) => {
-      console.error("[Tweet Editor Error]", error);
+      console.error("[Linkedin Editor Error]", error);
     },
   };
 

@@ -2,11 +2,14 @@
 
 import { cn } from "@/lib/utils";
 import {
+  ArrowLeftFromLine,
+  ArrowRightFromLine,
   AudioWaveform,
   Brain,
   Calendar,
   ChevronsDownUp,
   LibraryBig,
+  PanelLeft,
   Pencil,
 } from "lucide-react";
 import Link from "next/link";
@@ -29,19 +32,40 @@ function SideNav() {
 
   return (
     <Sidebar
-      className="bg-white border-r border-zinc-200"
+      className="border-r border-zinc-200"
       variant="inset"
       collapsible="icon"
     >
-      <SidebarHeader className="space-y-3">
-        <div className="text-sm text-center font-medium text-gray-500">
-          postiq.
+      <SidebarHeader className="border-b border-border/40 p-4">
+        <div className="flex items-center justify-start gap-2">
+          <button
+            onClick={toggleSidebar}
+            className="h-8 w-8 rounded-md hover:bg-accent/50 transition-colors flex items-center justify-center group/toggle-button flex-shrink-0"
+          >
+            <PanelLeft className="h-4 w-4 transition-all duration-200 group-hover/toggle-button:opacity-0 group-hover/toggle-button:scale-75" />
+            <div className="absolute transition-all duration-200 opacity-0 scale-75 group-hover/toggle-button:opacity-100 group-hover/toggle-button:scale-100">
+              {isCollapsed ? (
+                <ArrowRightFromLine className="h-4 w-4" />
+              ) : (
+                <ArrowLeftFromLine className="h-4 w-4" />
+              )}
+            </div>
+          </button>
+          <div
+            className={cn(
+              "flex items-center gap-1 transition-all duration-200 ease-out",
+              isCollapsed ? "opacity-0 w-0 overflow-hidden" : "opacity-100"
+            )}
+          >
+            {/* <Icons.logo className="size-4" /> */}
+            <p className={cn("text-sm/6 text-zinc-500 ")}>postiq</p>
+          </div>
         </div>
         <Button variant="outline" className="cursor-pointer">
           <div>
             <Avatar>
               <AvatarImage src="https://github.com/evilrabbit.png" />
-              <AvatarFallback>John Abhishek</AvatarFallback>
+              <AvatarFallback>JA</AvatarFallback>
             </Avatar>
           </div>
 

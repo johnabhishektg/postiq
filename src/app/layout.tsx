@@ -34,7 +34,6 @@ export default function RootLayout({
         <div className="flex">
           <SidebarProvider className="w-fit" defaultOpen={true}>
             <SideNav />
-            <SidebarTrigger />
           </SidebarProvider>
 
           <SidebarProvider

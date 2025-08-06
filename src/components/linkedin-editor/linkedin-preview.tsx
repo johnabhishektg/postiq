@@ -1,67 +1,17 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { Icon, Icons } from "../icon";
 import { cn } from "@/lib/utils";
-import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
-import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
-import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import {
-  $getSelection,
-  $isRangeSelection,
-  EditorState,
-  FORMAT_TEXT_COMMAND,
-  TextFormatType,
-} from "lexical";
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
+import { FORMAT_TEXT_COMMAND, TextFormatType } from "lexical";
+import { Bold, Image as ImageIcon, Italic, Smile } from "lucide-react";
+import Image from "next/image";
+import React, { useRef, useState } from "react";
+import { Icon } from "../icon";
 import { Button } from "../ui/button";
-import { Bold, Italic, Image as ImageIcon, Smile } from "lucide-react";
-
-function MyOnChangeFunction(props: {
-  onChange: (editorState: EditorState) => void;
-}): any {
-  const [editor] = useLexicalComposerContext();
-  const { onChange } = props;
-
-  React.useEffect(() => {
-    return editor.registerUpdateListener(({ editorState }) => {
-      onChange(editorState);
-    });
-  }, [editor, onChange]);
-}
-
-function Toolbar() {
-  const [editor] = useLexicalComposerContext();
-
-  const formatText = (format: TextFormatType) => {
-    editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
-  };
-
-  const insertImage = () => {
-    // Placeholder: Insert image logic goes here (e.g. custom image node)
-    alert("Image insert clicked!");
-  };
-
-  return (
-    <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
-      <Button variant="outline" onClick={() => insertImage()}>
-        <ImageIcon />
-      </Button>
-      <Button variant="outline" onClick={() => formatText("bold")}>
-        <Bold />
-      </Button>
-      <Button variant="outline" onClick={() => formatText("italic")}>
-        <Italic />
-      </Button>
-      <Button variant="outline" onClick={() => formatText("italic")}>
-        <Smile />
-      </Button>
-    </div>
-  );
-}
 
 function LinkedInPreview() {
   const [screenSize, setScreenSize] = React.useState<
@@ -73,6 +23,36 @@ function LinkedInPreview() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showMoreButton, setShowMoreButton] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  function Toolbar() {
+    const [editor] = useLexicalComposerContext();
+
+    const formatText = (format: TextFormatType) => {
+      editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
+    };
+
+    const insertImage = () => {
+      // Placeholder: Insert image logic goes here (e.g. custom image node)
+      alert("Image insert clicked!");
+    };
+
+    return (
+      <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+        <Button variant="outline" onClick={() => insertImage()}>
+          <ImageIcon />
+        </Button>
+        <Button variant="outline" onClick={() => formatText("bold")}>
+          <Bold />
+        </Button>
+        <Button variant="outline" onClick={() => formatText("italic")}>
+          <Italic />
+        </Button>
+        <Button variant="outline" onClick={() => formatText("italic")}>
+          <Smile />
+        </Button>
+      </div>
+    );
+  }
 
   const checkContentOverflow = () => {
     setTimeout(() => {
@@ -161,23 +141,12 @@ function LinkedInPreview() {
                   className={cn(
                     "w-full !min-h-16 resize-none text-base/7 leading-relaxed text-stone-800 border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
                   )}
-                  // aria-placeholder={<Placeholder />}
                 />
               }
               placeholder={<Placeholder />}
               ErrorBoundary={LexicalErrorBoundary}
             />
             <HistoryPlugin />
-            <OnChangePlugin
-              onChange={(editorState) => {
-                editorState.read(() => {
-                  const selection = $getSelection();
-                  if ($isRangeSelection(selection)) {
-                    console.log(selection.getTextContent());
-                  }
-                });
-              }}
-            />
           </div>
           {showMoreButton && (
             <button
