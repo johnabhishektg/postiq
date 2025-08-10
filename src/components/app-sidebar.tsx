@@ -6,7 +6,6 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarInset,
   useSidebar,
 } from "./ui/sidebar";
 import { ArrowDown, ArrowUp, Settings, Sparkles, X } from "lucide-react";
@@ -76,7 +75,7 @@ function ScrollToBottom(props: { className?: string }) {
   return (
     <Button
       className={cn(
-        "bg-primary text-white rounded-full cursor-pointer shadow border border-zinc-100",
+        "bg-[#4f47e1] text-white rounded-full cursor-pointer shadow border border-zinc-100",
         props.className
       )}
       onClick={() => scrollToBottom()}

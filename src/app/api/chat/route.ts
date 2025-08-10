@@ -1,20 +1,19 @@
-import { UIMessage, Message as VercelChatMessage, streamText } from "ai";
+import { streamText, type UIMessage } from "ai";
 import { openai } from "@ai-sdk/openai";
-
-const formatMessage = (message: VercelChatMessage) => {
-  return `${message.role}: ${message.content}`;
-};
+import { assistantPrompt } from "@/lib/prompt-utlis";
 
 export async function POST(req: Request) {
   try {
     const { messages }: { messages: UIMessage[] } = await req.json();
 
     const result = streamText({
-      model: openai("gpt-3.5-turbo"),
-      // model: openai("ft:gpt-4o-mini-2024-07-18:prmise::C16dIUCN"),
-      system:
-        "You are a professional LinkedIn ghostwriter. You write engaging, insightful, and authentic posts and comments that reflect the user's voice and position them as a thought leader. Your tone balances professionalism with a touch of personality and warmth. You understand LinkedIn culture, avoiding hard sells and focusing on value, storytelling, and credibility.",
+      model: openai("gpt-4o"),
       messages,
+      // model: openai("ft:gpt-4o-mini-2024-07-18:prmise::C16dIUCN"),
+      system: assistantPrompt({
+        editorContent:
+          "You're a professinal linkedin ghostwriter called postiq",
+      }),
     });
 
     return result.toDataStreamResponse();
