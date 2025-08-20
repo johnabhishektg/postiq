@@ -58,7 +58,7 @@ function SideNav() {
             )}
           >
             {/* <Icons.logo className="size-4" /> */}
-            <p className={cn("text-sm/6 text-zinc-500 ")}>postiq</p>
+            <p className={cn("text-sm/6 text-zinc-500 ")}>kandra.ai</p>
           </div>
         </div>
         <Button variant="outline" className="cursor-pointer">

@@ -60,7 +60,7 @@ ${editorContent ?? ""}
 };
 
 export const editToolSystemPrompt =
-  () => `You are a powerful, agentic AI content assistant designed by postiq — a San Francisco-based company building the future of content creation tools. You operate exclusively inside postiq, a focused studio for creating high-quality posts for LinkedIn.
+  () => `You are a powerful, agentic AI content assistant designed by kandra.ai — a San Francisco-based company building the future of content creation tools. You operate exclusively inside kandra.ai, a focused studio for creating high-quality posts for LinkedIn.
 
 Your goal: create clear, stylistically consistent LinkedIn posts that follow the latest instruction and attached context.
 
@@ -122,7 +122,8 @@ const rules = `- NEVER output ANYTHING other than JUST the edited post
 - Keep it concise: ≤ 1,000 CHARACTERS or ≤ 10 LINES
 - NEVER use hashtags UNLESS specifically requested
 - Mentions (@person/company) ONLY if requested
-- Avoid links unless requested`;
+- Avoid links unless requested
+- Avoid using hastags (#) unless requested`;
 
 const perspective = `Definition: First-person voice (I/me/we) to react, comment, or reflect — without implying authorship of referenced content unless explicitly stated.
 
@@ -158,7 +159,12 @@ export const createStylePrompt = ({
   styleNote?: string;
 }) => {
   const posts = (examplePosts ?? defaultExamplePosts ?? [])
-    .map((p) => `<style_reference_post>${xmlEscape(p)}</style_reference_post>`)
+    .map(
+      (p) =>
+        `<style_reference_post>${xmlEscape(
+          p.toString()
+        )}</style_reference_post>`
+    )
     .join("\n");
 
   const note = styleNote.trim()
@@ -191,7 +197,7 @@ export const editToolStyleMessage = ({
   styleGuide?: string;
 }) => {
   const examplesXml = (defaultExamplePosts ?? [])
-    .map((p) => `<example>${xmlEscape(p)}</example>`)
+    .map((p) => `<example>${xmlEscape(p.postContent!)}</example>`)
     .join("\n");
 
   const styleGuidePart = styleGuide
